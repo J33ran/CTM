@@ -1,3 +1,7 @@
+# version code 24ea27739109+
+coursera = 1
+# Please fill out this stencil and submit using the provided submission script.
+
 # Copyright 2013 Philip N. Klein
 
 def getitem(v,k):
@@ -18,7 +22,7 @@ def setitem(v,k,val):
     """
     Set the element of v with label d to be val.
     setitem(v,d,val) should set the value for key d even if d
-    is not previously represented in v.f, and even if val is 0.
+    is not previously represented in v.f.
 
     >>> v = Vec({'a', 'b', 'c'}, {'b':0})
     >>> v['b'] = 5
@@ -40,17 +44,10 @@ def equal(u,v):
     Return true iff u is equal to v.
     Because of sparse representation, it is not enough to compare dictionaries
 
-    Consider using brackets notation u[...] and v[...] in your procedure
-    to access entries of the input vectors.  This avoids some sparsity bugs.
-
     >>> Vec({'a', 'b', 'c'}, {'a':0}) == Vec({'a', 'b', 'c'}, {'b':0})
     True
-    >>> Vec({'a', 'b', 'c'}, {'a': 0}) == Vec({'a', 'b', 'c'}, {})
-    True
-    >>> Vec({'a', 'b', 'c'}, {}) == Vec({'a', 'b', 'c'}, {'a': 0})
-    True
 
-    Be sure that equal(u, v) checks equalities for all keys from u.f and v.f even if
+    Be sure that equal(u, v) check equalities for all keys from u.f and v.f even if
     some keys in u.f do not exist in v.f (or vice versa)
 
     >>> Vec({'x','y','z'},{'y':1,'x':2}) == Vec({'x','y','z'},{'y':1,'z':0})
@@ -80,13 +77,7 @@ def equal(u,v):
 
 def add(u,v):
     """
-    Returns the sum of the two vectors 
-    Consider using brackets notation u[...] and v[...] in your procedure
-    to access entries of the input vectors.  This avoids some sparsity bugs.
-
-    Do not seek to create more sparsity than exists in the two input vectors.
-    Doing so will unnecessarily complicate your code and will hurt performance.
-
+    Returns the sum of the two vectors.
     Make sure to add together values for all keys from u.f and v.f even if some keys in u.f do not
     exist in v.f (or vice versa)
 
@@ -104,10 +95,6 @@ def add(u,v):
     >>> f = Vec({'x','y','z'}, {'x':2,'y':0,'z':4})
     >>> d + e == f
     True
-    >>> d == Vec({'x','y','z'}, {'x':2,'y':1})
-    True
-    >>> e == Vec({'x','y','z'}, {'z':4,'y':-1})
-    True
     >>> b + Vec({'a','e','i','o','u'}, {}) == b
     True
     """
@@ -117,9 +104,6 @@ def add(u,v):
 def dot(u,v):
     """
     Returns the dot product of the two vectors.
-
-    Consider using brackets notation u[...] and v[...] in your procedure
-    to access entries of the input vectors.  This avoids some sparsity bugs.
 
     >>> u1 = Vec({'a','b'}, {'a':1, 'b':2})
     >>> u2 = Vec({'a','b'}, {'b':2, 'a':1})
@@ -158,9 +142,6 @@ def scalar_mul(v, alpha):
     """
     Returns the scalar-vector product alpha times v.
 
-    Consider using brackets notation v[...] in your procedure
-    to access entries of the input vector.  This avoids some sparsity bugs.
-
     >>> zero = Vec({'x','y','z','w'}, {})
     >>> u = Vec({'x','y','z','w'},{'x':1,'y':2,'z':3,'w':4})
     >>> 0*u == zero
@@ -178,18 +159,16 @@ def neg(v):
     """
     Returns the negation of a vector.
 
-    Consider using brackets notation v[...] in your procedure
-    to access entries of the input vector.  This avoids some sparsity bugs.
-
-    >>> u = Vec({1,3,5,7},{1:1,3:2,5:3,7:4})
+    >>> u = Vec({2,4,6,8},{2:1,4:2,6:3,8:4})
     >>> -u
-    Vec({1, 3, 5, 7},{1: -1, 3: -2, 5: -3, 7: -4})
-    >>> u == Vec({1,3,5,7},{1:1,3:2,5:3,7:4})
+    Vec({8, 2, 4, 6},{8: -4, 2: -1, 4: -2, 6: -3})
+    >>> u == Vec({2,4,6,8},{2:1,4:2,6:3,8:4})
     True
     >>> -Vec({'a','b','c'}, {'a':1}) == Vec({'a','b','c'}, {'a':-1})
     True
+
     """
-    return Vec(v.D, {d: -v[d] for d in v.D}) 
+    return Vec(v.D, {d: -v[d] for d in v.D})
 
 ###############################################################################################################################
 
@@ -201,8 +180,6 @@ class Vec:
         elements of D not appearing in f are implicitly mapped to zero
     """
     def __init__(self, labels, function):
-        assert isinstance(labels, set)
-        assert isinstance(function, dict)
         self.D = labels
         self.f = function
 
@@ -267,6 +244,3 @@ class Vec:
     def copy(self):
         "Don't make a new copy of the domain D"
         return Vec(self.D, self.f.copy())
-
-    def __iter__(self):
-        raise TypeError('%r object is not iterable' % self.__class__.__name__)

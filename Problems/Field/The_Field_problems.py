@@ -20,8 +20,7 @@ def myFilter(L, num):
       >>> myFilter([10,15,20,25],10)
       [15, 25]
     '''
-    pass
-
+    return [i for i in L if (i%num) != 0 ]
 
 
 ## 2: (Problem 2) Python Comprehensions: Lists of Lists
@@ -33,7 +32,7 @@ def my_lists(L):
     >>> my_lists([0,3])
     [[], [1, 2, 3]]
     '''
-    pass
+    return [[i  for i in range(1,x+1)] for x in L]
 
 
 
@@ -56,7 +55,7 @@ def myFunctionComposition(f, g):
       >>> myFunctionComposition(a,b) == {'x':'twentyfour','y':'twentyfive'}
       True
     '''
-    pass
+    return {fa:g[f[fa]] for fa in f}
 
 
 
@@ -74,9 +73,7 @@ Be sure your procedure works for the empty list.
       >>> mySum([3,5,10])
       18
     '''
-    pass
-
-
+    return sum(L) if L else 0
 
 ## 5: (Problem 5) Multiplying numbers in a list
 def myProduct(L):
@@ -92,9 +89,11 @@ Be sure your procedure works for the empty list.
       >>> myProduct([-3,2,4])
       -24
     '''
-    pass
+    res = 1 if (L) else 0
+    for i in L:
+        res = res * i
 
-
+    return res
 
 ## 6: (Problem 6) Minimum of a list
 def myMin(L):
@@ -111,10 +110,12 @@ Hint: The value of the Python expression float('infinity') is infinity.
     >>> myMin([0,3,5,-2,-5])
     -5
     '''
-    pass
+    res = float('infinity') if not(L) else float(0)
+    for i in L:
+        if i < res:
+            res = i
 
-
-
+    return res
 ## 7: (Problem 7) Concatenation of a List
 def myConcat(L):
     '''
@@ -129,7 +130,11 @@ Be sure your procedure works for the empty list.
     >>> myConcat(['what','is','up'])
     'whatisup'
     '''
-    pass
+    s = str()
+    for i in L:
+        s += i
+
+    return s
 
 
 
@@ -147,9 +152,11 @@ Be sure your procedure works for the empty list.
     >>> myUnion([set(),{3,5},{3,5}])
     {3, 5}
     '''
-    pass
+    s = set()
+    for _s in L:
+        s |=  _s
 
-
+    return s
 
 ## 9: (Problem 9) Complex Addition Practice
 # Each answer should be a Python expression whose value is a complex number.
@@ -176,7 +183,7 @@ def transform(a, b, L):
     >>> transform(3,2,[1,2,3])
     [5, 8, 11]
     '''
-    pass
+    return[(a*x)+b for x in L]
 
 
 

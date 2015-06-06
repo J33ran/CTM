@@ -22,7 +22,7 @@ def tuple_sum(A, B):
     >>> tuple_sum([(0,1),(-1,0),(2,2)], [(3,4),(5,6),(7,8)])
     [(3, 5), (4, 6), (9, 10)]
     '''
-    pass
+    return [tuple([c+d for c,d in zip(a,b)]) for (a,b) in zip(A,B)]
 
 
 
@@ -36,8 +36,9 @@ def inv_dict(d):
        keys are the values of d and its values are the keys of d
     Example:
     >>> inv_dict({'goodbye':  'au revoir', 'thank you': 'merci'}) == {'merci':'thank you', 'au revoir':'goodbye'}
+    True
     '''
-    pass
+    return {d[k]:k for k in d}
 
 
 
@@ -53,7 +54,7 @@ def row(p, n):
     >>> row(10,4)
     [10, 11, 12, 13]
     '''
-    pass
+    return [i for i in range(p,p+n)]
 
 comprehension_with_row = ...
 

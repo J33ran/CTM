@@ -2,7 +2,7 @@
 coursera = 1
 # Please fill out this stencil and submit using the provided submission script.
 
-from vec import Vec
+from CTM.hws.vector.vec import Vec
 
 
 

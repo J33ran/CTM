@@ -14,6 +14,9 @@ def getitem(v,k):
     3
     >>> v['b']
     0
+    >>> v3 = Vec({'a','b','c'}, {        'b': 2})
+    >>> v3['a']
+    0
     """
     assert k in v.D
     return v.f[k] if (k in v.f) else 0

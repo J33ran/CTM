@@ -103,7 +103,7 @@ def scalar_mul(M, x):
     >>> 0.25*M == Mat(({1,3,5}, {2,4}), {(1,2):1.0, (5,4):0.5, (3,4):0.75})
     True
     """
-    f = {(i,j): x * M.f[i,j] for i in M.D[0] for j in M.D[1]} 
+    f = {(i,j): x * M[i,j] for i in M.D[0] for j in M.D[1]} 
     return Mat(M.D, f)
 
 def transpose(M):
@@ -118,8 +118,8 @@ def transpose(M):
     >>> M.transpose() == Mt
     True
     """
-    f = {(j,i): M.f[i,j] for i in M.D[0] for j in M.D[1]}
-    D = {[M.D[1], M.D[0]]}
+    f = {(j,i): M[i,j] for i in M.D[0] for j in M.D[1]}
+    D = (M.D[1], M.D[0])
 
     return Mat(D,f)
 
@@ -141,7 +141,7 @@ def vector_matrix_mul(v, M):
     True
     """
     assert M.D[0] == v.D
-    return sum([Vec(v.D, [v[x] * M[x,y] for y in M.D[1]]) for x in v.D])
+    return sum([Vec(M.D[1], {y:v[x] * M[x,y] for y in M.D[1]}) for x in v.D])
 
 
 def matrix_vector_mul(M, v):
@@ -161,8 +161,8 @@ def matrix_vector_mul(M, v):
     True
     """
     assert M.D[1] == v.D
-    return sum([Vec(v.D, [v[x] * M[y,x] for y in M.D[0]]) for x in v.D])
-
+    return sum([Vec(M.D[0], {y:v[x] * M[y,x] for y in M.D[0]}) for x in v.D])
+'''
 def matrix_matrix_mul(A, B):
     """
     Returns the result of the matrix-matrix multiplication, A*B.
@@ -187,7 +187,8 @@ def matrix_matrix_mul(A, B):
     True
     """
     assert A.D[1] == B.D[0]
-    pass 
+    pass
+'''
 
 ################################################################################
 

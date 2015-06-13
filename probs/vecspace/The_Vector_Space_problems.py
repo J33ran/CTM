@@ -2,7 +2,9 @@
 coursera = 1
 # Please fill out this stencil and submit using the provided submission script.
 
-from CTM.hws.vector.vec import Vec
+from hws.vec.vec import Vec
+from utils.gf2 import one,zero
+
 
 
 
@@ -16,9 +18,11 @@ def vec_select(veclist, k):
     >>> v4 = Vec(D, {'a': 10, 'b': 10})
     >>> vec_select([v1, v2, v3, v4], 'a') == [Vec(D,{'b': 1}), Vec(D,{'b': 2})]
     True
-    '''
-    pass
-
+    '''    
+    return [Vec(v.D, v.f) for v in veclist if v[k] == 0]
+    
+    
+    
 def vec_sum(veclist, D):
     '''
     >>> D = {'a','b','c'}
@@ -29,7 +33,8 @@ def vec_sum(veclist, D):
     >>> vec_sum([v1, v2, v3, v4], D) == Vec(D, {'b': 13, 'a': 11})
     True
     '''
-    pass
+    v = sum(veclist)
+    return Vec(v.D, v.f)
 
 def vec_select_sum(veclist, k, D):
     '''
@@ -40,8 +45,8 @@ def vec_select_sum(veclist, k, D):
     >>> v4 = Vec(D, {'a': 10, 'b': 10})
     >>> vec_select_sum([v1, v2, v3, v4], 'a', D) == Vec(D, {'b': 3})
     True
-    '''
-    pass
+    ''' 
+    return vec_sum(vec_select(veclist, k), D)
 
 
 
@@ -56,14 +61,14 @@ def scale_vecs(vecdict):
     >>> [v in [Vec({1,2,4},{2: 3.0}), Vec({1,2,4},{1: 0.2, 2: 0.4, 4: 1.6})] for v in result]
     [True, True]
     '''
-    pass
+    return [vecdict[k]/k for k in vecdict]
 
 
 
 ## 3: (Problem 3) Constructing span of given vectors over GF(2)
 def GF2_span(D, S):
     '''
-    >>> from GF2 import one
+    >>> from utils.gf2 import one
     >>> D = {'a', 'b', 'c'}
     >>> GF2_span(D, {Vec(D, {'a':one, 'c':one}), Vec(D, {'c':one})}) == {Vec(D,{}), Vec(D,{'a':one, 'c':one}), Vec(D,{'c': one}), Vec(D,{'a':one})}
     True
@@ -76,31 +81,39 @@ def GF2_span(D, S):
     True
     >>> S == {Vec({0, 1},{1: one}), Vec({0, 1},{0: one})}
     True
-    '''
-    pass
+    '''    
+    #vec_span = {Vec(D, {d:0 for d in D})}
+    vec_span = {Vec(D, {})}
+
+    for v in S:
+        for v_1 in {one*v, zero*v}:
+            vec_list = [v + v_1 for v in vec_span] 
+            vec_span = vec_span |  set(vec_list)
+
+    return vec_span
 
 
 
-## 4: (Problem 4) Is it a vector space 1
-# Answer with a boolean, please.
-is_a_vector_space_1 = ...
+### 4: (Problem 4) Is it a vector space 1
+## Answer with a boolean, please.
+#is_a_vector_space_1 = ...
 
 
 
-## 5: (Problem 5) Is it a vector space 2
-# Answer with a boolean, please.
-is_a_vector_space_2 = ...
+### 5: (Problem 5) Is it a vector space 2
+## Answer with a boolean, please.
+#is_a_vector_space_2 = ...
 
 
 
-## 6: (Problem 6) Is it a vector space 3
-# Answer with a boolean, please.
-is_a_vector_space_3 = ...
+### 6: (Problem 6) Is it a vector space 3
+## Answer with a boolean, please.
+#is_a_vector_space_3 = ...
 
 
 
-## 7: (Problem 7) Is it a vector space 4
-# Answer with a boolean, please.
-is_a_vector_space_4a = ...
-is_a_vector_space_4b = ...
+### 7: (Problem 7) Is it a vector space 4
+## Answer with a boolean, please.
+#is_a_vector_space_4a = ...
+#is_a_vector_space_4b = ...
 

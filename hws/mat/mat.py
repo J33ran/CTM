@@ -162,7 +162,7 @@ def matrix_vector_mul(M, v):
     """
     assert M.D[1] == v.D
     return sum([Vec(M.D[0], {y:v[x] * M[y,x] for y in M.D[0]}) for x in v.D])
-'''
+
 def matrix_matrix_mul(A, B):
     """
     Returns the result of the matrix-matrix multiplication, A*B.
@@ -187,8 +187,16 @@ def matrix_matrix_mul(A, B):
     True
     """
     assert A.D[1] == B.D[0]
-    pass
-'''
+    D = (A.D[0], B.D[1])
+    f = {}
+
+    vecs = [A*Vec(B.D[0], {y: B[y,x] for y in B.D[0]}) for x in B.D[1]]
+    #f = {(y,x): for y in v.D} for (x,v) in zip(D[1], vecs)}
+    for (x,v) in zip(D[1], vecs):
+        for y in v.D:
+            f[y,x] = v[y]
+    
+    return Mat(D, f)
 
 ################################################################################
 

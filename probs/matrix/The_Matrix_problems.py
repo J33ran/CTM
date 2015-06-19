@@ -2,16 +2,15 @@
 coursera = 1
 # Please fill out this stencil and submit using the provided submission script.
 
-from mat import Mat
-from vec import Vec
-
+from hws.mat.mat import Mat
+from hws.vec.vec import Vec
 
 
 ## 1: (Problem 1) Computing matrix-vector products
 # Please represent your solution vectors as lists.
-vector_matrix_product_1 = ...
-vector_matrix_product_2 = ...
-vector_matrix_product_3 = ...
+vector_matrix_product_1 = [1,0]
+vector_matrix_product_2 = [0, 4.44]
+vector_matrix_product_3 = [14,20,26]
 
 
 
@@ -19,15 +18,15 @@ vector_matrix_product_3 = ...
 # Represent your solution as a list of rowlists.
 # For example, the 2x2 identity matrix would be [[1,0],[0,1]].
 
-M_swap_two_vector = ...
+M_swap_two_vector = [[0, 1], [1,0]]
 
 
 
 ## 3: (Problem 3) [z+x, y, x] Matrix-vector multiplication
-three_by_three_matrix = ... # Represent with a list of rowlists.
+three_by_three_matrix = [[1, 0, 1], [0, 1, 0], [1, 0, 0]] # Represent with a list of rowlists.
 
 
-
+'''
 ## 4: (Problem 4) [2x, 4y, 3z] matrix-vector multiplication
 multiplied_matrix = ... # Represent with a list of row lists.
 
@@ -127,6 +126,7 @@ column_row_vector_multiplication4 = Vec({0,1}, {...})
 
 column_row_vector_multiplication5 = Vec({0, 1, 2}, {...})
 
+'''
 
 
 ## 10: (Problem 10) Linear-combinations matrix-vector multiply
@@ -151,7 +151,7 @@ def lin_comb_mat_vec_mult(M, v):
     True
     '''
     assert(M.D[1] == v.D)
-    pass
+    return (M*v)
 
 
 
@@ -176,7 +176,7 @@ def lin_comb_vec_mat_mult(v, M):
       True
     '''
     assert(v.D == M.D[0])
-    pass
+    return (v*M)
 
 
 
@@ -199,7 +199,7 @@ def dot_product_mat_vec_mult(M, v):
     True
     '''
     assert(M.D[1] == v.D)
-    pass
+    return M*v
 
 
 
@@ -221,28 +221,26 @@ def dot_product_vec_mat_mult(v, M):
       True
       '''
     assert(v.D == M.D[0])
-    pass
-
+    return v*M
 
 
 ## 14: (Problem 14) Matrix-vector matrix-matrix multiply
 # You are also allowed to use the matutil module
 def Mv_mat_mat_mult(A, B):
     assert A.D[1] == B.D[0]
-    pass
+    return (A*B)
 
 
 
 ## 15: (Problem 15) Vector-matrix matrix-matrix multiply
 def vM_mat_mat_mult(A, B):
     assert A.D[1] == B.D[0]
-    pass
+    return (A*B) 
 
-
-
+'''
 ## 16: (Problem 16) Buttons
-from solver import solve
-from GF2 import one
+from utils.solver import solve
+from utils.gf2 import one
 
 def D(n): return {(i,j) for i in range(n) for j in range(n)}
 
@@ -303,3 +301,4 @@ are_inverses2 = ...
 are_inverses3 = ...
 are_inverses4 = ...
 
+'''

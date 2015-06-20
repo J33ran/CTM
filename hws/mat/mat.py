@@ -191,12 +191,14 @@ def matrix_matrix_mul(A, B):
     f = {}
 
     vecs = [A*Vec(B.D[0], {y: B[y,x] for y in B.D[0]}) for x in B.D[1]]
-    #f = {(y,x): for y in v.D} for (x,v) in zip(D[1], vecs)}
+    f = {(y,x):v[y] for (x,v) in zip(D[1], vecs) for y in v.D}
+    return Mat(D, f)
+'''
     for (x,v) in zip(D[1], vecs):
         for y in v.D:
             f[y,x] = v[y]
-    
     return Mat(D, f)
+'''
 
 ################################################################################
 

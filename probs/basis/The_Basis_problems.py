@@ -7,7 +7,7 @@ from math import sqrt, pi
 from matutil import coldict2mat
 from solver import solve
 from vec import Vec
-#from vecutil import list2vec
+from vecutil import list2vec
 
 
 
@@ -322,7 +322,6 @@ def exchange(S, A, z):
     V = set([v for v in U if is_superfluous(U,v)])
     
     R = list(V - (A | {z}))
-
     return R[0] if R else list2vec([0 for v in z.D])
     
 

@@ -301,16 +301,21 @@ def direct_sum_decompose(U_basis, V_basis, w):
     zero = Vec(w.D, {})
     res = (zero, zero)
 
+    UV_basis = set(U_basis) | set (V_basis)
+    z = basis.vec2rep(list(UV_basis),w)
+
+    return res
+"""
     for u in U_basis:
         for v in V_basis:
-            z = u + v
-            if (z == w):
-                res = (u,v)
+            x = basis.rep2vec(z,[u + v])
+            if (x-w).is_almost_zero():
+                res = (u, v)
                 break
-    #print(res)
-    return res
+"""
 
 
+"""
 ## 10: (Problem 10) Is Invertible Function
 def is_invertible(M):
     '''
@@ -329,8 +334,6 @@ def is_invertible(M):
     return basis.is_independent(set(cols))
 
 
-
-"""
 ## 11: (Problem 11) Inverse of a Matrix over GF(2)
 def find_matrix_inverse(A):
     '''

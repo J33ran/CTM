@@ -2,14 +2,18 @@
 coursera = 1
 # Please fill out this stencil and submit using the provided submission script.
 
+from copy import copy
 from vecutil import list2vec
 from GF2 import one
 from solver import solve
 from matutil import listlist2mat, coldict2mat
 from mat import Mat
 from vec import Vec
+import probs.basis.The_Basis_problems as basis
+import matutil as mu
 
 
+'''
 
 ## 1: (Problem 1) Iterative Exchange Lemma
 w0 = list2vec([1,0,0])
@@ -44,6 +48,7 @@ exchange_2_S1 = [...]
 exchange_2_S2 = [...]
 exchange_2_S3 = [v0, v1, v2]
 
+'''
 
 
 ## 3: (Problem 3) Morph Lemma Coding
@@ -80,10 +85,22 @@ def morph(S, B):
         >>> sol == [(B[0],S[0]), (B[1],S[2]), (B[2],S[3])] or sol == [(B[0],S[1]), (B[1],S[2]), (B[2],S[3])]
         True
     '''
-    pass
+    vecs = []
+    T = set(copy(S))
+    C = set()
+
+    for v in B:
+        C = set(B) - {v}
+        z = basis.exchange(T, C, v)
+
+        T = (T - {z}) | {v}
+        vecs.append((v,z))
+
+    return vecs
+    
 
 
-
+"""
 ## 4: (Problem 4) Row and Column Rank Practice
 # Please express each solution as a list of Vecs
 
@@ -99,8 +116,7 @@ col_space_3 = [...]
 row_space_4 = [...]
 col_space_4 = [...]
 
-
-
+"""
 ## 5: (Problem 5) Subset Basis
 def subset_basis(T):
     '''
@@ -142,8 +158,15 @@ def subset_basis(T):
         >>> subset_basis({c0,c1,c2,c3,c4}) == {c0,c1,c2,c4}
         True
     '''
-    pass
+    S = set()
 
+    for v in T:
+        S = S | {v}
+
+        if basis.is_superfluous(S,v):
+            S = S - {v}
+
+    return S
 
 
 ## 6: (Problem 6) Superset Basis Lemma in Python
@@ -171,8 +194,12 @@ def superset_basis(C, T):
         >>> all(x in [a0,a1,a2,a3] for x in sb)
         True
     '''
-    pass
+    S = set(T)
 
+    for (u,v) in morph(T,C):
+        S = (S - {v}) | {u}
+
+    return S
 
 
 ## 7: (Problem 7) My Is Independent Procedure
@@ -202,7 +229,7 @@ def my_is_independent(L):
         >>> L == [Vec(D,{0: 1}), Vec(D,{1: 1}), Vec(D,{2: 1}), Vec(D,{0: 1, 1: 1, 2: 1}), Vec(D,{0: 1, 1: 1}), Vec(D,{1: 1, 2: 1})]
         True
     '''
-    pass
+    return basis.is_independent(set(L))
 
 
 
@@ -222,8 +249,14 @@ def my_rank(L):
         >>> my_rank([list2vec(v) for v in [[1,1,1],[2,2,2],[3,3,3],[4,4,4],[123,432,123]]])
         2
     '''
-    pass
+    S = set()
+    for s in L:
+        U = S | {s}
 
+        if basis.is_independent(U):
+            S = U
+
+    return len(S)
 
 
 ## 9: (Problem 9) Direct Sum Unique Representation
@@ -265,8 +298,17 @@ def direct_sum_decompose(U_basis, V_basis, w):
         >>> w == Vec(D,{0: 2, 1: 5, 2: 0, 3: 0, 4: 1, 5: 0})
         True
     '''
-    pass
+    zero = Vec(w.D, {})
+    res = (zero, zero)
 
+    for u in U_basis:
+        for v in V_basis:
+            z = u + v
+            if (z == w):
+                res = (u,v)
+                break
+    #print(res)
+    return res
 
 
 ## 10: (Problem 10) Is Invertible Function
@@ -283,10 +325,12 @@ def is_invertible(M):
     >>> is_invertible(M1)
     False
     '''
-    pass
+    cols = (mu.mat2rowdict(M))
+    return basis.is_independent(set(cols))
 
 
 
+"""
 ## 11: (Problem 11) Inverse of a Matrix over GF(2)
 def find_matrix_inverse(A):
     '''
@@ -323,3 +367,4 @@ def find_triangular_matrix_inverse(A):
     '''
     pass
 
+"""

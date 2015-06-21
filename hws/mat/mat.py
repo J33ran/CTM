@@ -3,7 +3,7 @@ coursera = 1
 # Please fill out this stencil and submit using the provided submission script.
 
 # Copyright 2013 Philip N. Klein
-from hws.vec.vec import Vec
+from vec import Vec
 
 #Test your Mat class over R and also over GF(2).  The following tests use only R.
 

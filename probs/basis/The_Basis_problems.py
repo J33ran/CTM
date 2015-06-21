@@ -7,10 +7,11 @@ from math import sqrt, pi
 from matutil import coldict2mat
 from solver import solve
 from vec import Vec
-from vecutil import list2vec
+#from vecutil import list2vec
 
 
 
+'''
 ## 1: (Problem 5.14.1) Span of Vectors over R, A
 # For each part, please provide your solution as a list of the coefficients for
 # the generators of V.
@@ -143,6 +144,7 @@ replace_1 = ...
 replace_2 = ...
 replace_3 = ...
 
+'''
 
 
 ## 13: (Problem 5.14.13) rep2vec
@@ -163,9 +165,7 @@ def rep2vec(u, veclist):
         >>> rep2vec(Vec({0,1,2}, {0:2, 1:4}), [v0, v1, v2]) == Vec({'d', 'a', 'c', 'b'},{'a': 6, 'c': 0, 'b': 8, 'd': 0})
         True
     '''
-    pass
-
-
+    return coldict2mat(veclist) * u
 
 ## 14: (Problem 5.14.14) vec2rep
 def vec2rep(veclist, v):
@@ -183,9 +183,9 @@ def vec2rep(veclist, v):
         >>> vec2rep([v0,v1,v2], v)  == Vec({0, 1, 2},{0: 1.5, 1: -0.25, 2: 1.25})
         True
     '''
-    pass
-
-
+    A = coldict2mat(veclist)
+    u = solve(A,v)
+    return u
 
 ## 15: () Superfluous Vector in Python
 def is_superfluous(S, v):
@@ -224,13 +224,24 @@ def is_superfluous(S, v):
     >>> is_superfluous(S, list2vec([0,0,0,one]))
     False
     >>> S = {list2vec(v) for v in [[one,one,one,0,one],[0,0,one,0,one],[0,one,one,0,0],[0,one,one,one,one]]}
-    >>>> is_superfluous(S, list2vec([0,one,one,one,one]))
+    >>> is_superfluous(S, list2vec([0,one,one,one,one]))
     False
     '''
     assert v in S
-    pass
+
+    if v.is_almost_zero():
+        return True
+
+    A = list(S - {v})
+
+    if (not A):
+        return False
 
 
+    M = coldict2mat(A)
+    u = solve(M,v)
+    b = M*u
+    return (b - v).is_almost_zero()
 
 ## 16: () is_independent in Python
 def is_independent(S):
@@ -240,6 +251,7 @@ def is_independent(S):
     Output:
         - boolean: True if vectors in S are linearly independent
     Examples:
+    >>> from vecutil import list2vec
     >>> is_independent(set())
     True
     >>> is_independent({Vec({'a'},{})})
@@ -251,7 +263,6 @@ def is_independent(S):
     >>> is_independent({list2vec(v) for v in [[1,2,1],[2,1,2],[1,1,0]]})
     True
     >>> from GF2 import one
-    >>> from vecutil import list2vec
     >>> is_independent({list2vec(v) for v in [[one,one,0],[0,one,one],[one,0,one],[one,0,0]]})
     False
     >>> is_independent({list2vec(v) for v in [[one,one,0,0,0],[0,one,0,0,one],[0,0,one,one,0],[0,0,0,one,one],[one,0,0,0,one]]})
@@ -259,11 +270,15 @@ def is_independent(S):
     >>> is_independent({list2vec(v) for v in [[one,one,0,0,0],[0,one,one,0,0],[0,0,one,one,0],[0,0,0,one,one]]})
     True
     '''
-    pass
+    result = False
+    for v in S:
+        result = is_superfluous(S, v)
+        if (result):
+            break
 
+    return (not result)
 
-
-## 17: () Exchange Lemma in Python
+# 17: () Exchange Lemma in Python
 def exchange(S, A, z):
     '''
     Input:
@@ -302,5 +317,12 @@ def exchange(S, A, z):
         >>> exchange(S, A, z) in [list2vec([0, 0, one, one]), list2vec([0, one, one, 0])]
         True
     '''
-    pass
+    
+    U = S | {z}
+    V = set([v for v in U if is_superfluous(U,v)])
+    
+    R = list(V - (A | {z}))
+
+    return R[0] if R else list2vec([0 for v in z.D])
+    
 

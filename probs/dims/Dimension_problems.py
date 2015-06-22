@@ -375,7 +375,5 @@ def find_triangular_matrix_inverse(A):
     B = list(mu.mat2rowdict(A).values())
 
     C =[tr.triangular_solve_n(B, i) for i in I]
-    D = mu.rowdict2mat(C)
-    print(D)
-
+    D = mu.coldict2mat(C)
     return D

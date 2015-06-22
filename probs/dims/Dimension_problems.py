@@ -298,24 +298,23 @@ def direct_sum_decompose(U_basis, V_basis, w):
         >>> w == Vec(D,{0: 2, 1: 5, 2: 0, 3: 0, 4: 1, 5: 0})
         True
     '''
-    zero = Vec(w.D, {})
-    res = (zero, zero)
 
-    UV_basis = set(U_basis) | set (V_basis)
-    z = basis.vec2rep(list(UV_basis),w)
+    UV_basis = U_basis + V_basis
+    uv_w = basis.vec2rep(UV_basis,w)
 
-    return res
-"""
-    for u in U_basis:
-        for v in V_basis:
-            x = basis.rep2vec(z,[u + v])
-            if (x-w).is_almost_zero():
-                res = (u, v)
-                break
-"""
+    uv_values = list(uv_w.f.values())
+
+    udims = len(U_basis)
+
+    ux = list2vec(uv_values[:udims])
+    vy = list2vec(uv_values[udims:])
 
 
-"""
+    u = basis.rep2vec(ux, U_basis)
+    v = basis.rep2vec(vy, V_basis)
+
+    return (u,v)
+
 ## 10: (Problem 10) Is Invertible Function
 def is_invertible(M):
     '''
@@ -330,9 +329,8 @@ def is_invertible(M):
     >>> is_invertible(M1)
     False
     '''
-    cols = (mu.mat2rowdict(M))
-    return basis.is_independent(set(cols))
-
+    cols = set((mu.mat2coldict(M)).values())
+    return basis.is_independent(cols)
 
 ## 11: (Problem 11) Inverse of a Matrix over GF(2)
 def find_matrix_inverse(A):
@@ -353,6 +351,7 @@ def find_matrix_inverse(A):
 
 
 
+"""
 ## 12: (Problem 12) Inverse of a Triangular Matrix
 def find_triangular_matrix_inverse(A):
     '''

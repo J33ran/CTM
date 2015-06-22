@@ -11,6 +11,7 @@ from mat import Mat
 from vec import Vec
 import probs.basis.The_Basis_problems as basis
 import matutil as mu
+import triangular as tr
 
 
 '''
@@ -347,11 +348,12 @@ def find_matrix_inverse(A):
         >>> find_matrix_inverse(M2) == Mat(M2.D, {(0, 1): one, (1, 0): one, (2, 2): one})
         True
     '''
-    pass
+    dim = len(A.D[1])
+    I=[[1 if item_idx == row_idx else 0 for item_idx in range(dim) ] for row_idx in range(dim)]
 
+    B = [A*list2vec(v) for v in I]
+    return coldict2mat(B)
 
-
-"""
 ## 12: (Problem 12) Inverse of a Triangular Matrix
 def find_triangular_matrix_inverse(A):
     '''
@@ -367,6 +369,13 @@ def find_triangular_matrix_inverse(A):
         >>> find_triangular_matrix_inverse(A) == Mat(({0, 1, 2, 3}, {0, 1, 2, 3}), {(0, 1): -0.5, (1, 2): -0.3, (3, 2): 0.0, (0, 0): 1.0, (3, 3): 1.0, (3, 0): 0.0, (3, 1): 0.0, (2, 1): 0.0, (0, 2): -0.05000000000000002, (2, 0): 0.0, (1, 3): -0.87, (2, 3): -0.1, (2, 2): 1.0, (1, 0): 0.0, (0, 3): -3.545, (1, 1): 1.0})
         True
     '''
-    pass
+    rows = len(A.D[0])
 
-"""
+    I=[[1 if i == j else 0 for j in range(rows)] for i in range(rows)]
+    B = list(mu.mat2rowdict(A).values())
+
+    C =[tr.triangular_solve_n(B, i) for i in I]
+    D = mu.rowdict2mat(C)
+    print(D)
+
+    return D

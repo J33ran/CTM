@@ -9,6 +9,7 @@ from GF2 import one
 
 ## 1: (Problem 1) Recognizing Echelon Form
 # Write each matrix as a list of row lists
+"""
 
 echelon_form_1 = [[   ...   ],
                   [   ...   ],
@@ -29,6 +30,7 @@ echelon_form_4 = [[   ...   ],
                   [   ...   ],
                   [   ...   ],
                   [   ...   ]]
+"""
 
 
 
@@ -60,9 +62,25 @@ def is_echelon(A):
         >>> is_echelon([[7,1,0],[0,5,0],[0,0,0],[0,0,0]])
         True
     '''
-    pass
+    
+    echelon = []
+    k = len(A[0])
+    bFound  = False;
+    for v in reversed(A):
+        for i in range(len(v)):
+            if (v[i] != 0):
+                bFound = True
+                k = i
+                break
 
+        if (bFound):
+            echelon.append(k)
 
+    #print (echelon)
+    res =  all ([echelon[i] > echelon[i+1] for i in range(len(echelon) -1 )])
+    return res
+
+"""
 
 ## 3: (Problem 3) Solving with Echelon Form: No Zero Rows
 # Give each answer as a list
@@ -121,4 +139,4 @@ null_space_rows_a = {...} # Put the row numbers of M from the PDF
 
 ## 8: (Problem 8) Nullspace B
 null_space_rows_b = {...} # Put the row numbers of M from the PDF
-
+"""

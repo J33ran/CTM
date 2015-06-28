@@ -4,6 +4,8 @@ coursera = 1
 
 from matutil import *
 from GF2 import one
+import triangular as tg
+from vecutil import zero_vec
 
 
 
@@ -98,7 +100,7 @@ echelon_form_vec_c = ...
 solving_with_echelon_form_a = ...
 solving_with_echelon_form_b = ...
 
-
+"""
 
 ## 5: (Problem 5) Echelon Solver
 def echelon_solve(row_list, label_list, b):
@@ -121,10 +123,34 @@ def echelon_solve(row_list, label_list, b):
     >>> b_list == [one,0,one]
     True
     '''
-    pass
+    """
+        v = zero_vec(label_list)
+        n = len(label_list) - len(row_list)
 
+        zero_list = [v for i in range(n)]
+        row_list = row_list + zero_list
 
+        pass
+    """ 
+    D = row_list[0].D 
+    x = zero_vec(D)
+    num_labels = len(label_list)
+    for j in reversed(range(len(D))):
+        if j > len(row_list)-1: continue
+        row = row_list[j]
+        if row == zero_vec(D): continue
+        # in the row find the label of the column with the first non-zero entry
+        for i in range(num_labels):
+            if row[label_list[i]] == one: break
+        c = label_list[i]
+        x[c] = (b[j] - x*row)/row[c]
+    return x
 
+    #r = tg.triangular_solve(row_list, label_list, b)
+    #print(r)
+    #return r
+
+"""
 ## 6: (Problem 6) Solving General Matrices via Echelon
 row_list = [ ... ]    # Provide as a list of Vec instances
 label_list = [ ... ] # Provide as a list

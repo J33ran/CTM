@@ -123,32 +123,22 @@ def echelon_solve(row_list, label_list, b):
     >>> b_list == [one,0,one]
     True
     '''
-    """
-        v = zero_vec(label_list)
-        n = len(label_list) - len(row_list)
+    x = zero_vec(label_list)
+    n = len(label_list) - len(row_list)
 
-        zero_list = [v for i in range(n)]
-        row_list = row_list + zero_list
+    zero_list = [x for i in range(n)]
+    row_list = row_list + zero_list
 
-        pass
-    """ 
-    D = row_list[0].D 
-    x = zero_vec(D)
-    num_labels = len(label_list)
-    for j in reversed(range(len(D))):
-        if j > len(row_list)-1: continue
+    for j in reversed(range(len(label_list))):
+        c = label_list[j]
         row = row_list[j]
-        if row == zero_vec(D): continue
-        # in the row find the label of the column with the first non-zero entry
-        for i in range(num_labels):
-            if row[label_list[i]] == one: break
-        c = label_list[i]
-        x[c] = (b[j] - x*row)/row[c]
-    return x
 
-    #r = tg.triangular_solve(row_list, label_list, b)
-    #print(r)
-    #return r
+        if (row == zero_vec(label_list)):
+            continue
+        else:
+            x[c] = (b[j] - x*row)/row[c]
+
+    return x
 
 """
 ## 6: (Problem 6) Solving General Matrices via Echelon

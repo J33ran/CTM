@@ -13,4 +13,4 @@ def list2vec(L):
 def zero_vec(D):
     """Returns a zero vector with the given domain
     """
-    return Vec(D, {})
+    return Vec(set(D), {})

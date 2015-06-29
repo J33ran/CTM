@@ -72,6 +72,7 @@ def equal(u,v):
     for d in u.D:
         if (v[d] != u[d]): 
             result = False
+            break
 
     return result
 

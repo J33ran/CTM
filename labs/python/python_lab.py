@@ -25,17 +25,17 @@ divisible_by_3 = (x%3==0)
 ## 4: (Task 4) Conditional Expression
 x = -9
 y = 1/2
-expression_val = ...
+expression_val = 1.0 
 
 
 
 ## 5: (Task 5) Squares Set Comprehension
-first_five_squares = { ... for _ in {1,2,3,4,5} }
+first_five_squares = {i*i for i in {1,2,3,4,5} }
 
 
 
 ## 6: (Task 6) Powers-of-2 Set Comprehension
-first_five_pows_two = { ... for _ in {0,1,2,3,4} }
+first_five_pows_two = { 2**i for i in {0,1,2,3,4} }
 
 
 
@@ -43,8 +43,8 @@ first_five_pows_two = { ... for _ in {0,1,2,3,4} }
 # Assign three-element sets to X1 and Y1 so that
 # {x*y for x in X1 for y in Y1} evaluates to a nine-element set.
 
-X1 = { ..., ..., ... }
-Y1 = { ..., ..., ... }
+X1 = { 1, 2, 3}
+Y1 = { 5, 7, 11}
 
 
 
@@ -52,8 +52,8 @@ Y1 = { ..., ..., ... }
 # Assign disjoint three-element sets to X1 and Y1 so that
 # {x*y for x in X1 for y in Y1} evaluates to a five-element set.
 
-X2 = { ..., ..., ... }
-Y2 = { ..., ..., ... }
+X2 = { 1, 2, 4}
+Y2 = { 0, 3, 6}
 
 
 
@@ -61,7 +61,7 @@ Y2 = { ..., ..., ... }
 S = {1, 2, 3, 4}
 T = {3, 4, 5, 6}
 # Replace { ... } with a one-line set comprehension that evaluates to the intersection of S and T
-S_intersect_T = { ... }
+S_intersect_T = { x for x in S for y in T if ( x==y)}
 
 
 
@@ -70,13 +70,13 @@ list_of_numbers = [20, 10, 15, 75]
 # Replace ... with a one-line expression that evaluates to the average of list_of_numbers.
 # Your expression should refer to the variable list_of_numbers, and should work
 # for a list of any length greater than zero.
-list_average = ... 
+list_average = sum(L)//len(L)
 
 
 
 ## 11: (Task 11) Cartesian-product comprehension
 # Replace ... with a double list comprehension over ['A','B','C'] and [1,2,3]
-cartesian_product = ...
+cartesian_product = [[k,l] for k in K for l in L] 
 
 
 
@@ -84,40 +84,41 @@ cartesian_product = ...
 LofL = [[.25, .75, .1], [-1, 0], [4, 4, 4, 4]]
 # Replace ... with a one-line expression of the form sum([sum(...) ... ]) that
 # includes a comprehension and evaluates to the sum of all numbers in all the lists.
-LofL_sum = ...
+LofL_sum = sum([sum(i) for i in LofL])
 
 
 
 ## 13: (Task 13) Three-element tuples summing to zero
 S = {-4, -2, 1, 2, 5, 0}
 # Replace [ ... ] with a one-line list comprehension in which S appears
-zero_sum_list = [ ... ] 
+zero_sum_list = [(x,y,z) for x in S for y in S for z in S if (x+y+z) == 0] 
 
 
 
 ## 14: (Task 14) Nontrivial three-element tuples summing to zero
 S = {-4, -2, 1, 2, 5, 0}
 # Replace [ ... ] with a one-line list comprehension in which S appears
-exclude_zero_list = [ ... ]
+exclude_zero_list = [(x,y,z) for x in S for y in S for z in S if ((x+y+z)==0) and (x=y=z)]
 
 
 
 ## 15: (Task 15) One nontrivial three-element tuple summing to zero
 S = {-4, -2, 1, 2, 5, 0}
 # Replace ... with a one-line expression that uses a list comprehension in which S appears
-first_of_tuples_list = ...
+first_of_tuples_list = [(x,y,z) for x in S for y in S for z in S if (x+y+z) == 0][0]
+
 
 
 
 ## 16: (Task 16) List and set differ
 # Assign to example_L a list such that len(example_L) != len(list(set(example_L)))
-example_L = [...]
+example_L = [1,1]
 
 
 
 ## 17: (Task 17) Odd numbers
 # Replace {...} with a one-line set comprehension over a range of the form range(n)
-odd_num_list_range = {...}
+odd_num_list_range = [i for i in range(9) if i%2 != 0]
 
 
 
@@ -125,7 +126,7 @@ odd_num_list_range = {...}
 # In the line below, replace ... with an expression that does not include a comprehension.
 # Instead, it should use zip and range.
 # Note: zip() does not return a list. It returns an 'iterator of tuples'
-range_and_zip = ...
+range_and_zip = list(zip(range(len(L)), L))
 
 
 
@@ -135,7 +136,7 @@ B = [1, 15, 20]
 # Replace [...] with a one-line comprehension that uses zip together with the variables A and B.
 # The comprehension should evaluate to a list whose ith element is the ith element of
 # A plus the ith element of B.
-list_sum_zip = [...]
+list_sum_zip = [i+j for (i,j) in zip([10,25,40], [1,15,20])]
 
 
 

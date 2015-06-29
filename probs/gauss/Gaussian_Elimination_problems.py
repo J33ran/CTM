@@ -4,7 +4,7 @@ coursera = 1
 
 from matutil import *
 from GF2 import one
-import triangular as tg
+#import triangular as tg
 from vecutil import zero_vec
 
 

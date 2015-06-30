@@ -145,7 +145,7 @@ dlist = [{'James':'Sean', 'director':'Terence'}, {'James':'Roger', 'director':'L
 k = 'James'
 # Replace [...] with a one-line comprehension that uses dlist and k
 # and that evaluates to ['Sean','Roger','Pierce']
-value_list = [...]
+value_list = [[d[idx] for d in dlist] for idx in set([i for i in dlist[0] for v in dlist[1:] if i in v])]
 
 
 
@@ -153,7 +153,8 @@ value_list = [...]
 dlist = [{'Bilbo':'Ian','Frodo':'Elijah'},{'Bilbo':'Martin','Thorin':'Richard'}]
 k = 'Bilbo'
 #Replace [...] with a one-line comprehension 
-value_list_modified_1 = [...] # <-- Use the same expression here
+value_list_modified_1 =
+[[d[idx] if idx in d else 'NOT PRESENT' for d in dlist] for idx in set([v for i in dlist for v in i])] # <-- Use the same expression here
 k = 'Frodo'
 value_list_modified_2 = [...] # <-- as you do here
 
@@ -161,14 +162,14 @@ value_list_modified_2 = [...] # <-- as you do here
 
 ## 22: (Task 22) A dictionary mapping integers to their squares
 # Replace {...} with a one-line dictionary comprehension
-square_dict = {...}
+square_dict =  { i:i*i for i in range(100)}
 
 
 
 ## 23: (Task 23) Making the identity function
 D = {'red','white','blue'}
 # Replace {...} with a one-line dictionary comprehension
-identity_dict = {...}
+identity_dict = {i:i for i in D}
 
 
 
